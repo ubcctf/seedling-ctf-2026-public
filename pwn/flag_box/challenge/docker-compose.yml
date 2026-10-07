@@ -1,0 +1,8 @@
+services:
+  flag_box:
+    build: .
+    restart: always
+    ports:
+      - "1337:5000"
+    privileged: true
+    read_only: true

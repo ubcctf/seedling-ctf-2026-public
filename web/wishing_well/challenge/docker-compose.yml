@@ -1,0 +1,10 @@
+services:
+  make_a_wish:
+    build: .
+    ports:
+      - "1337:1337"
+    environment:
+      - FLAG=maple{placeholder}
+      - REDIS_TTL=120
+  redis:
+    image: redis

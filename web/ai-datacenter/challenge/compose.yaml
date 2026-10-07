@@ -1,0 +1,27 @@
+services:
+  chat-web:
+    build: chat-web
+    ports:
+      - "1337:8000"
+    environment:
+      - TOOLS_BASE_URL=http://chat-tools:8000
+    volumes:
+      - prompt:/state
+
+  chat-tools:
+    build: chat-tools
+    environment:
+      - DEFENSE_HOST=defense-system
+      - DEFENSE_PORT=9000
+      - DEFENSE_PASSCODE=defense_passcode_different_on_remote
+
+  defense-system:
+    build: defense-system
+    ports:
+      - "1338:8000"
+    environment:
+      - DEFENSE_PORT=9000
+      - DEFENSE_PASSCODE=defense_passcode_different_on_remote
+
+volumes:
+  prompt:

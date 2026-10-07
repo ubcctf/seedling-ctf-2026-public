@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Welcome!</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+<div>
+  <div>You have signed up! You can now play pachinko!</div>
+  <a href="/pachinko" id="play">Click here to play!</a>
+  <script>
+    document.getElementById("play").addEventListener("click", (e) => {
+      e.preventDefault()
+      fetch("/set_age_to_underage")
+        .catch(() => {})
+        .then(() => (location.href = "/pachinko"))
+    })
+  </script>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "cobra",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "serve": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^5.2.1",
+    "redis": "^6.2.1"
+  }
+}

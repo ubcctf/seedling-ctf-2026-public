@@ -1,0 +1,10 @@
+<%- include('partials/header') %>
+<h1>Sign up</h1>
+<% if (error) { %><p class="error"><%= error %></p><% } %>
+<form method="post" action="/signup" class="stack">
+  <label>Username <input name="username" required autocomplete="username"></label>
+  <label>Password <input name="password" type="password" required autocomplete="new-password"></label>
+  <button>Sign up</button>
+</form>
+<p>Already have an account? <a href="/login">Log in</a></p>
+<%- include('partials/footer') %>

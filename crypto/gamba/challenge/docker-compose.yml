@@ -1,0 +1,8 @@
+
+services:
+  gamba:
+    build: .
+    ports:
+      - '1337:1337'
+    environment:
+      - FLAG=maple{CHANGE_ME_RIGHT_NOW}

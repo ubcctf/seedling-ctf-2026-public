@@ -1,0 +1,8 @@
+services:
+  impossible-rot13:
+    build: .
+    ports:
+      - "1337:1337"
+    restart: always
+    environment:
+      - FLAG=maple{eventruerandomnesscanleakinformation}

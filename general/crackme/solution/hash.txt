@@ -1,0 +1,1 @@
+backup.zip/backup/flag.txt:$zip2$*0*3*0*aaff9b0bdb0a9c4992adc0a767007ff2*6e62*24*509452868764a6591b1c0ae7108533985ff07bb719ce355d53aa3427588213534ec0a089*75ac613ec41827bb4670*$/zip2$:backup/flag.txt:backup.zip:backup.zip

@@ -1,0 +1,9 @@
+services:
+  grand_prix:
+    build: .
+    ports:
+      - "4567:4567"
+    environment:
+      - ADMIN_PASS=changeme
+      - FLAG=maple{placeholder}
+      - BOT_BASE_URL=http://127.0.0.1:4567

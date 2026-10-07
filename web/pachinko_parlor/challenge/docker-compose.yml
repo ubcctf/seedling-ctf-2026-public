@@ -1,0 +1,48 @@
+name: gambling_site
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: casino
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d casino"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  web:
+    build: .
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/casino
+      PORT: "3000"
+      SESSION_SECRET: lyndonissexy
+      FLAG: "maple{CHANGE_ME_RIGHT_NOW}"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3001:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./views
+          target: /app/views
+        - action: sync
+          path: ./public
+          target: /app/public
+        - action: sync+restart
+          path: ./server.js
+          target: /app/server.js
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: package-lock.json
+
+volumes:
+  pgdata:

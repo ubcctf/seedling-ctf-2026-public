@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Defense System Status</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            color: #e0e0e0;
+            font-family: monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        body.enabled {
+            background: #3a0d0d;
+        }
+
+        body.disabled {
+            background: #0d3a1a;
+        }
+
+        h1 {
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            color: #929292;
+            margin-bottom: 1.5rem;
+        }
+
+        .status {
+            font-size: 6.5vw;
+            font-weight: bold;
+            line-height: 1.1;
+            white-space: nowrap;
+            margin-bottom: 1.5rem;
+        }
+
+        body.enabled .status {
+            color: #ff4136;
+        }
+
+        body.disabled .status {
+            color: #00ff41;
+        }
+
+        .detail {
+            font-size: 2vw;
+            color: #cccccc;
+        }
+    </style>
+</head>
+
+<body class="enabled">
+    <div class="status" id="status"></div>
+    <div class="detail" id="detail-1"></div>
+    <div class="detail" id="detail-2"></div>
+
+    <script>
+        let secondsLeft = 0;
+
+        function render(disabled, team) {
+            document.body.className = disabled ? "disabled" : "enabled";
+            document.getElementById("status").textContent = disabled ? "DEFENSE SYSTEM DISABLED" : "DEFENSE SYSTEM ENABLED";
+            const d1 = document.getElementById("detail-1");
+            const d2 = document.getElementById("detail-2");
+            if (disabled) {
+                d1.textContent = "Disabled by team: " + team;
+                d2.textContent = "Auto re-enable in " + secondsLeft + "s";
+            } else {
+                d1.textContent = "DO NOT APPROACH";
+                d2.textContent = "";
+            }
+        }
+
+        async function poll() {
+            try {
+                const r = await fetch("/status", { cache: "no-store" });
+                const s = await r.json();
+                secondsLeft = s.seconds_left;
+                render(s.disabled, s.team);
+            } catch (e) {
+                // just keep last state
+            }
+        }
+
+        setInterval(() => {
+            if (secondsLeft > 0) {
+                secondsLeft--;
+                const d2 = document.getElementById("detail-2");
+                if (document.body.classList.contains("disabled")) {
+                    d2.textContent = "Auto re-enable in " + secondsLeft + "s";
+                }
+            }
+        }, 1000);
+
+        poll();
+        setInterval(poll, 2000);
+    </script>
+</body>
+
+</html>

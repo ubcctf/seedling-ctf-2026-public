@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+<h1>Shop</h1>
+<p id="shop-msg"></p>
+
+<h2>Exchange</h2>
+<p>Exchange rate: 100 credits = $1. Minimum exchange is 1000 credits.</p>
+<div class="row">
+  <form id="to-dollars" class="row">
+    <input id="credits-in" type="number" min="<%= minCredits %>" step="<%= rate %>" value="<%= minCredits %>"> credits
+    <button>Convert to dollars</button>
+  </form>
+  <form id="to-credits" class="row">
+    $<input id="dollars-in" type="number" min="<%= minCredits / rate %>" step="1" value="<%= minCredits / rate %>">
+    <button>Convert to credits</button>
+  </form>
+</div>
+
+<h2>Items</h2>
+<div class="items">
+  <% items.forEach(function (item) { %>
+    <div class="item">
+      <img src="<%= item.item_image_url %>" alt="<%= item.item_name %>">
+      <div><%= item.item_name %></div>
+      <div>$<%= item.price %></div>
+      <% if (item.owned) { %>
+        <% if (item.item_name === 'flag') { %><a href="/win">Click to view</a><% } else { %><span>Owned</span><% } %>
+      <% } else { %>
+        <button class="buy" data-id="<%= item.id %>">Buy</button>
+      <% } %>
+    </div>
+  <% }) %>
+</div>
+<script>window.rate = <%= rate %></script>
+<script src="/shop.js"></script>
+<%- include('partials/footer') %>

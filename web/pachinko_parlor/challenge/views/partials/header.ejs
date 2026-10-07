@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Pachinko Parlor</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<% if (user) { %>
+  <nav>
+    <strong>Pachinko Parlor</strong>
+    <a href="/pachinko">Pachinko</a>
+    <a href="/shop" id="nav-shop">Shop</a>
+    <a href="/settings">Settings</a>
+    <span class="spacer"></span>
+    <span><%= user.username %></span>
+    <span>Credits: <b id="nav-credits"><%= user.credits %></b></span>
+    <span>Dollars: <b id="nav-dollars">$<%= user.dollars %></b></span>
+    <form method="post" action="/logout"><button>Log out</button></form>
+  </nav>
+  <script>
+    const underage = <%= user.role !== 'over_18' %>
+    function ageGateAlert() {
+      alert("You must be over 18 to use this website. Please change your age in settings")
+    }
+    if (underage) {
+      document.getElementById("nav-shop").addEventListener("click", (e) => {
+        e.preventDefault()
+        ageGateAlert()
+        location.href = "/pachinko"
+      })
+    }
+  </script>
+<% } %>
+<main>

@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+}
+main {
+  padding: 16px;
+}
+nav {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 8px 16px;
+}
+nav form {
+  margin: 0;
+}
+.spacer {
+  flex: 1;
+}
+.center {
+  text-align: center;
+  margin-top: 20vh;
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 280px;
+}
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 8px 0;
+}
+.items {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+}
+.item img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+}
+.error {
+  color: red;
+}
+canvas {
+  border: 1px solid black;
+  display: block;
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Datacenter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #00ff41;
+            font-family: monospace;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #log {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        #log .sys {
+            color: #ff3333;
+        }
+
+        #log .usr {
+            color: #888;
+        }
+
+        form {
+            display: flex;
+            padding: 0.5rem;
+            border-top: 1px solid #222;
+        }
+
+        input {
+            flex: 1;
+            background: #111;
+            color: #00ff41;
+            border: 1px solid #333;
+            padding: 0.5rem;
+            font-family: monospace;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        button {
+            background: #222;
+            color: #00ff41;
+            border: 1px solid #333;
+            padding: 0.5rem 1rem;
+            font-family: monospace;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="log"></div>
+
+    <form id="form">
+        <input id="input" placeholder="> " autofocus>
+    </form>
+
+    <script>
+        const log = document.getElementById('log');
+        const form = document.getElementById('form');
+        const input = document.getElementById('input');
+
+        function append(cls, text) {
+            const s = document.createElement('span');
+            s.className = cls;
+            s.textContent = text + '\n';
+            log.appendChild(s);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const msg = input.value.trim();
+            if (!msg) return;
+            append('usr', '> ' + msg);
+            input.value = '';
+            input.disabled = true;
+
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: msg })
+            });
+            const data = await res.json();
+            append('sys', data.response.at(-1).content);
+
+            input.disabled = false;
+            input.focus();
+        };
+    </script>
+</body>
+
+</html>

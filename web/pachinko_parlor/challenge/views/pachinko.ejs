@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<h1>Pachinko</h1>
+<p>Each ball costs your bet. Land in a multiplier slot to win bet * multiplier.</p>
+<div class="row">
+  <label>Bet <input id="bet" type="number" min="<%= minBet %>" max="<%= maxBet %>" step="1" value="<%= minBet %>"></label>
+  <label>Balls <input id="balls" type="number" min="1" max="<%= maxBalls %>" step="1" value="1"></label>
+  <button id="drop">Drop ball</button>
+  <span id="result"></span>
+</div>
+<canvas id="board" width="600" height="500"></canvas>
+<script>
+  window.slots = <%- JSON.stringify(slots) %>
+  if (underage && new URLSearchParams(location.search).has("age_gate")) ageGateAlert()
+</script>
+<script src="/pachinko.js"></script>
+<%- include('partials/footer') %>

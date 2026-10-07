@@ -1,0 +1,9 @@
+<%- include('partials/header') %>
+<h1>Settings</h1>
+<p>Username: <%= user.username %></p>
+<label>
+  <input type="checkbox" disabled <%= user.role === 'over_18' ? 'checked' : '' %>>
+  I confirm I am over 18
+</label>
+<p class="error">Changing age is disabled due to little kids lying about their ages.</p>
+<%- include('partials/footer') %>
